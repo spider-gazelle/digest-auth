@@ -4,6 +4,15 @@ require "openssl"
 require "process"
 require "digest/md5"
 
+# maintain basic backwards compatibility
+{% if compare_versions(Crystal::VERSION, "0.36.0") < 0 %}
+  class URI
+    def request_target
+      full_path
+    end
+  end
+{% end %}
+
 # An implementation of RFC 2617 Digest Access Authentication.
 class DigestAuth
   class Error < Exception; end
@@ -77,7 +86,7 @@ class DigestAuth
 
     ha1 = algorithm.update(a1.to_slice).final.hexstring
     algorithm.reset
-    ha2 = algorithm.update("#{method}:#{uri.full_path}".to_slice).final.hexstring
+    ha2 = algorithm.update("#{method}:#{uri.request_target}".to_slice).final.hexstring
     algorithm.reset
 
     nonce_count_string = ("%08x" % nonce_count)
@@ -96,7 +105,7 @@ class DigestAuth
       header << (iis ? %(qop="#{qop}") : "qop=#{qop}")
     end
 
-    header << %(uri="#{uri.full_path}")
+    header << %(uri="#{uri.request_target}")
     header << %(nonce="#{nonce}")
 
     if qop
