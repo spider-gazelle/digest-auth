@@ -23,6 +23,7 @@ class DigestAuth
   # Creates a digest auth header
   # IIS servers handle the "qop" parameter of digest authentication
   # differently so you may need to set `iis` to true for such servers.
+  # ameba:disable Metrics/CyclomaticComplexity
   def auth_header(uri : URI, www_authenticate : String, method : String, iis : Bool = false)
     nonce_count = next_nonce
     user = URI.decode(uri.user || "")
