@@ -1,6 +1,6 @@
 # Crystal Lang Digest Auth
 
-[![Build Status](https://travis-ci.com/spider-gazelle/digest-auth.svg?branch=master)](https://travis-ci.com/github/spider-gazelle/digest-auth)
+[![CI](https://github.com/spider-gazelle/digest-auth/actions/workflows/ci.yml/badge.svg)](https://github.com/spider-gazelle/digest-auth/actions/workflows/ci.yml)
 
 Communicate with servers that implement digest auth.
 
